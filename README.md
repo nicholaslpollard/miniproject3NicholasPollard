@@ -3,38 +3,81 @@
 INF601 - Advanced Programming in Python  
 Nicholas Pollard
 
-## Project Question
+## What this project does
 
-How do movie ratings compare across genres, and which genre has the highest average rating?
+This project uses the FHSU Practice Hub movies dataset to compare movie ratings across different genres. The question I wanted to answer was which movie genre has the highest average rating.
 
-## Data Source
+The program retrieves 100 movie records from the Practice Hub API and stores the data in a Pandas DataFrame. The dataset includes the movie title, director, year, genre, and rating.
 
-This project uses the FHSU Practice Hub sanctioned movies dataset:
+Pandas is used to group the movies by genre and calculate the average rating for each group. The program also counts how many movies are included in each genre.
 
-https://practice.fhsucyber.com/api/v1/datasets/movies
+For this sample, Horror had the highest average rating at 5.97.
 
-The program requests 100 movie records from the API and loads them into a Pandas DataFrame. Each record includes:
+The program creates two charts using Matplotlib:
 
-- title
-- director
-- year
-- genre
-- rating
+- `average_rating_by_genre.png` - shows the average rating for each genre and displays the exact average above each bar
+- `rating_distribution_by_genre.png` - shows how the individual movie ratings are distributed within each genre
 
-## What the Program Does
+The charts are saved as PNG files in the `charts/` folder when the program runs.
 
-`miniproject3.py` does the following:
+## Setup
 
-1. Sends an authenticated request to the Practice Hub API and retrieves 100 movie records.
-2. Loads the records into a Pandas DataFrame and checks that all of the expected columns are present.
-3. Groups the movies by genre and calculates the average rating for each genre using Pandas.
-4. Sorts the genres from highest to lowest average rating.
-5. Prints an analysis to the terminal, including how many movies were analyzed, the average rating and movie count for each genre, and which genre has the highest average rating.
-6. Generates two charts and saves them to the `charts/` folder.
+### 1. Create and activate a virtual environment
 
-## The Analysis
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
 
-The core of the analysis uses a Pandas `groupby`:
+### 2. Install the requirements
 
-```python
-genre_averages = df.groupby("genre")["rating"].mean().sort_values(ascending=False)
+```powershell
+pip install -r requirements.txt
+```
+
+### 3. Set the Practice Hub API token
+
+The program uses the `PRACTICE_API_TOKEN` environment variable to access the Practice Hub API.
+
+In PowerShell, set the token with:
+
+```powershell
+$env:PRACTICE_API_TOKEN = "your-token-here"
+```
+
+The token is not stored in the GitHub repository.
+
+## Running the program
+
+With the virtual environment activated and the API token set, run:
+
+```powershell
+python miniproject3.py
+```
+
+The program will print the number of movies analyzed, the average rating and movie count for each genre, and the genre with the highest average rating.
+
+It will also create two PNG charts inside the `charts/` folder.
+
+The `charts/` folder is included in `.gitignore`, so the generated chart files are not stored in the GitHub repository.
+
+## Project files
+
+- `miniproject3.py` - main Python program
+- `requirements.txt` - required Python packages
+- `.gitignore` - excludes the virtual environment, generated charts, local environment files, and Python cache files
+- `README.md` - project information and setup instructions
+
+## AI Usage
+
+### Claude was used for
+
+I used Claude Code to help build the main Pandas analysis, create the Matplotlib charts, add basic data validation, and troubleshoot and test the program.
+
+### What I did myself
+
+I created the project environment and GitHub repository, installed the required packages, connected to and tested the Practice Hub API, wrote the initial DataFrame inspection code, reviewed and tested the completed program, and worked through the Git process.
+
+### What I changed
+
+After reviewing the AI-generated code, I added the exact average rating above each bar in the average rating chart. I also added the number of movies in each genre to the terminal output so the results provide more context.
