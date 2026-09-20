@@ -57,32 +57,54 @@ def main():
 
 def make_bar_chart(genre_averages):
     fig, ax = plt.subplots(figsize=(8, 5))
-    ax.bar(genre_averages.index, genre_averages.values, color="steelblue")
+
+    bars = ax.bar(
+        genre_averages.index,
+        genre_averages.values,
+        color="steelblue"
+    )
+
+    ax.bar_label(bars, fmt="%.2f", padding=3)
 
     ax.set_title("Average Movie Rating by Genre")
     ax.set_xlabel("Genre")
     ax.set_ylabel("Average Rating")
     ax.set_ylim(0, 10)
     ax.tick_params(axis="x", rotation=30)
+
     fig.tight_layout()
 
-    fig.savefig(os.path.join(CHARTS_DIR, "average_rating_by_genre.png"))
+    fig.savefig(
+        os.path.join(CHARTS_DIR, "average_rating_by_genre.png")
+    )
+
     plt.close(fig)
 
 
 def make_box_plot(df, genre_order):
-    ratings_by_genre = [df.loc[df["genre"] == genre, "rating"] for genre in genre_order]
+    ratings_by_genre = [
+        df.loc[df["genre"] == genre, "rating"]
+        for genre in genre_order
+    ]
 
     fig, ax = plt.subplots(figsize=(8, 5))
-    ax.boxplot(ratings_by_genre, tick_labels=genre_order)
+
+    ax.boxplot(
+        ratings_by_genre,
+        tick_labels=genre_order
+    )
 
     ax.set_title("Distribution of Movie Ratings by Genre")
     ax.set_xlabel("Genre")
     ax.set_ylabel("Rating")
     ax.tick_params(axis="x", rotation=30)
+
     fig.tight_layout()
 
-    fig.savefig(os.path.join(CHARTS_DIR, "rating_distribution_by_genre.png"))
+    fig.savefig(
+        os.path.join(CHARTS_DIR, "rating_distribution_by_genre.png")
+    )
+
     plt.close(fig)
 
 
