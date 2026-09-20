@@ -41,13 +41,25 @@ def main():
 
     # average rating per genre, sorted highest to lowest
     genre_averages = df.groupby("genre")["rating"].mean().sort_values(ascending=False)
+
+    # number of movies in each genre
+    genre_counts = df["genre"].value_counts()
+
     top_genre = genre_averages.index[0]
 
     print(f"Movies analyzed: {len(df)}")
     print("\nAverage rating by genre:")
+
     for genre, avg_rating in genre_averages.items():
-        print(f"  {genre}: {avg_rating:.2f}")
-    print(f"\nHighest average rating: {top_genre} ({genre_averages.iloc[0]:.2f})")
+        print(
+            f"  {genre}: {avg_rating:.2f} "
+            f"({genre_counts[genre]} movies)"
+        )
+
+    print(
+        f"\nHighest average rating: "
+        f"{top_genre} ({genre_averages.iloc[0]:.2f})"
+    )
 
     os.makedirs(CHARTS_DIR, exist_ok=True)
 
